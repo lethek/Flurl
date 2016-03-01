@@ -2,17 +2,18 @@
 <package >
 	<metadata>
 		<id>Flurl</id>
-		<version>1.0.10</version>
+		<version>1.0.11-airtime001</version>
 		<title>Flurl</title>
 		<authors>Todd Menier</authors>
-		<projectUrl>http://tmenier.github.io/Flurl</projectUrl>
+		<projectUrl>https://github.com/lethek/Flurl</projectUrl>
 		<iconUrl>https://pbs.twimg.com/profile_images/534024476296376320/IuPGZ_bX_400x400.png</iconUrl>
-		<licenseUrl>https://raw.githubusercontent.com/tmenier/Flurl/master/LICENSE</licenseUrl>
+		<licenseUrl>https://raw.githubusercontent.com/lethek/Flurl/master/LICENSE</licenseUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>
 			A fluent, portable URL builder. To make HTTP calls off the fluent chain, check out Flurl.Http.
 		</description>
 		<releaseNotes>
+1.0.11 - Url.Fragment
 1.0.10 - More flexible kv parsing (github pr #16)
 1.0.9 - Decode + as space, optionally encode space as + (github #41)
 1.0.8 - Don't trim trailing slash (github #37)
