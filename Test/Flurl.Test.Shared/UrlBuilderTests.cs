@@ -170,6 +170,20 @@ namespace Flurl.Test
 			var url = "http://www.mysite.com/more".RemoveQueryParams("x", "y");
 			Assert.AreEqual("http://www.mysite.com/more", url.ToString());
 		}
+		
+		[Test]
+		public void can_set_fragment_identifier()
+		{
+			var url = "http://www.mysite.com".SetFragment("test");
+			Assert.AreEqual("http://www.mysite.com#test", url.ToString());
+		}
+
+		[Test]
+		public void null_fragment_identifier_is_excluded()
+		{
+			var url = "http://www.mysite.com".SetFragment(null);
+			Assert.AreEqual("http://www.mysite.com", url.ToString());
+		}
 
 		[Test]
 		public void url_ToString_uses_invariant_culture() {
@@ -215,6 +229,12 @@ namespace Flurl.Test
 		public void encodes_query_params() {
 			var url = "http://www.mysite.com".SetQueryParams(new { x = "$50", y = "2+2=4" });
 			Assert.AreEqual("http://www.mysite.com?x=%2450&y=2%2B2%3D4", url.ToString());
+		}
+
+		[Test]
+		public void encodes_fragment_identifier() {
+			var url = "http://www.mysite.com".SetFragment(@"#/test?returnUrl=/[sqbrackets]/{braces}?more\characters+10 and space");
+			Assert.AreEqual("http://www.mysite.com#/test?returnUrl=/%5Bsqbrackets%5D/%7Bbraces%7D?more%5Ccharacters+10%20and%20space", url.ToString());
 		}
 
 		[Test]

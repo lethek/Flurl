@@ -93,6 +93,15 @@ namespace Flurl
 		}
 
 		/// <summary>
+		/// Converts string to a Url object and adds a fragment identifier.
+		/// </summary>
+		/// <param name="identifier">value of fragment identifier</param>
+		/// <returns>The Url obect with the fragment identifier added</returns>
+		public static Url SetFragment(this string url, string identifier) {
+			return new Url(url).SetFragment(identifier);
+		}
+
+		/// <summary>
 		/// Trims the URL to its root, including the scheme, any user info, host, and port (if specified).
 		/// </summary>
 		/// <returns>A Url object.</returns>

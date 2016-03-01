@@ -20,6 +20,11 @@ namespace Flurl
 		public QueryParamCollection QueryParams { get; private set; }
 
 		/// <summary>
+		/// The optional fragment identifier
+		/// </summary>
+		public string Fragment { get; private set; }
+		
+		/// <summary>
 		/// Constructs a Url object from a string.
 		/// </summary>
 		/// <param name="baseUrl">The URL to use as a starting point (required)</param>
@@ -75,6 +80,25 @@ namespace Flurl
 		public static string EncodeQueryParamValue(object value, bool encodeSpaceAsPlus) {
 			var result = Uri.EscapeDataString((value ?? "").ToInvariantString());
 			return encodeSpaceAsPlus ? result.Replace("%20", "+") : result;
+		}
+
+		/// <summary>
+		/// Decodes a fragment identifier.
+		/// </summary>
+		/// <param name="identifier">The encoded fragment identifier.</param>
+		/// <returns></returns>
+		public static string DecodeFragmentIdentifier(string identifier) {
+			return Uri.UnescapeDataString(identifier ?? "");
+		}
+		
+		/// <summary>
+		/// Encodes a fragment identifier.
+		/// </summary>
+		/// <param name="identifier">The fragment identifier to encode.</param>
+		/// <returns></returns>
+		public static string EncodeFragmentIdentifier(string identifier) {
+			// http://stackoverflow.com/questions/2849756/list-of-valid-characters-for-the-fragment-identifier-in-an-url
+			return Uri.EscapeUriString(identifier).Replace("[", "%5B").Replace("]", "%5D");
 		}
 
 		/// <summary>
@@ -191,6 +215,16 @@ namespace Flurl
 		}
 
 		/// <summary>
+		/// Sets the optional fragment identifier for the URL.
+		/// </summary>
+		/// <param name="identifier">Value of the fragment identifier</param>
+		/// <returns>The Url object with the fragment identifier added</returns>
+		public Url SetFragment(string identifier) {
+			Fragment = identifier;
+			return this;
+		}
+
+		/// <summary>
 		/// Resets the URL to its root, including the scheme, any user info, host, and port (if specified).
 		/// </summary>
 		/// <returns>The Url object trimmed to its root.</returns>
@@ -217,7 +251,9 @@ namespace Flurl
 			var query = QueryParams.ToString(encodeStringAsPlus);
 			if (query.Length > 0)
 				url += "?" + query;
-
+			var fragment = Fragment;
+			if (!String.IsNullOrEmpty(fragment))
+				url += "#" + EncodeFragmentIdentifier(fragment.TrimStart('#'));
 			return url;
 		}
 
